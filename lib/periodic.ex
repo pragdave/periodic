@@ -1,9 +1,7 @@
 defmodule Periodic do
   use DynamicSupervisor
 
-  @moduledoc """
-  See `Periodic.repeat/3` for information
-  """
+  @moduledoc File.read!("README.md")
 
   @spec start_link(any()) :: :ignore | {:error, any()} | {:ok, pid()}
   def start_link(arg) do
