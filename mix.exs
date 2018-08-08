@@ -16,9 +16,8 @@ defmodule Periodic.MixProject do
   def project do
     [
       app:     :periodic,
-      name:    "Periodic",
       version: "0.1.0",
-      elixir:  "~> 1.7-rc",
+      elixir:  "~> 1.6",
       deps:    [ {:ex_doc, "~> 0.14", only: :dev} ],
 
       description: @description,

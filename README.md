@@ -35,12 +35,57 @@ application.ex
 ~~~ elixir
 child_spec = [
   Periodic,
+  MyApp,
   . . .
 ]
 ~~~
 
-This module is a genserver that fetches data from two feeds. The first
-is fetched every 30 seconds, and the second every 60s.
+First a silly example:
+
+~~~ elixir
+defmodule Silly do
+  use GenServer
+
+  def callback(state = [{ label, count }]) do
+    IO.inspect state
+    { :ok, [ { label, count + 100 }]}
+  end
+
+  def start_link(_) do
+    GenServer.start_link(__MODULE__, nil)
+  end
+
+  def init(_) do
+    Periodic.repeat({ __MODULE__, :callback }, 500, state: [ one: 1 ])
+    Periodic.repeat({ __MODULE__, :callback }, 300, state: [ two: 2 ], offset: 100)
+    { :ok, nil }
+  end
+
+end
+~~~
+
+The calls to `Periodic.repeat` will cause the `callback` function to be
+called in two different sequences: the first time it will be called
+every 500ms, and it will also be called every 300ms. Each sequence of
+calls will maintain its own state.
+
+This will output:
+
+~~~
+Compiling 1 file (.ex)
+[one: 1]
+[two: 2]
+[two: 102]
+[one: 101]
+[two: 202]
+[one: 201]
+[two: 302]
+[two: 402]
+ . . .
+~~~
+
+As something more complex, here's a genserver that fetches data from two
+feeds. The first is fetched every 30 seconds, and the second every 60s.
 
 ~~~ elixir
 defmodule Fetcher do
