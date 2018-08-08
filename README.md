@@ -4,8 +4,8 @@ src="./assets/images/clock.svg">
 # Periodic: run functions at intervals [![Build Status](https://travis-ci.org/pragdave/periodic.svg?branch=master)](https://travis-ci.org/pragdave/periodic)
 
 
-The Periodic supervisor manages a dynamic set of tasks. Each of these is
-run repeatedly at a specified interval.
+The Periodic supervisor manages a dynamic set of tasks. Each of these
+tasks is run repeatedly at a per-task specified interval.
 
 A task is repreented as a function. It receives a single parameter, its
 current state. When complete, this function can return
@@ -90,7 +90,7 @@ Notes:
 
 * The parameters to the first call to `Periodic.repeat` say run
   `Fetcher.fetch` every 30s, passing it a map containing the name
-   a feed and the pid to send the data to.
+   of a feed and the pid to send the data to.
 
 * the second call to `Fetcher.fetch` sets up a second schedule. This
   happens to call the same function, but every 60s. It also offsets
@@ -144,16 +144,16 @@ use:
 
 * The options list make contain:
 
-  * `state: ` term
+  * `state: ` _term_
 
     The initial state that is passed as a parameter when the function is
     first executeded.
 
-  * `name:` name
+  * `name:` _name_
 
     A name for the task. This can be used subsequently to terminate it.
 
-  * `offset:` ms
+  * `offset:` _ms_
 
     An offset (in milliseconds) to be applied before the first execution
     of the function. This can be used to stagger executions of multiple
@@ -191,8 +191,8 @@ You write functions that `Periodic` will call. These will have the spec:
 
 * Each call to `Periodic.repeat` creates a new worker process. This
   worker spends most of its time waiting for the interval timer to
-  triggerat which point it invokes the function you passed and resets
-  the timer.
+  trigger, at which point it invokes the function you passed it, then
+  resets the timer.
 
 * If a function takes more time to execute than the interval time, then
   the next call to that function will happen immediately, and all
