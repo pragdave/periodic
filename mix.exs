@@ -8,7 +8,7 @@ defmodule Periodic.MixProject do
   @source_url "https://github.com/pragdave/periodic"
 
   @package [
-      files:    ~w( lib README.md license.md ),
+      files:    ~w( lib README.md license.md mix.exs ),
       licenses:   [ "BSD3" ],
       links:     %{ "GitHub" => @source_url }
   ]
